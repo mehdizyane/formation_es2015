@@ -8,7 +8,7 @@ const Commands = require('./src/Commands');
 
 const questionsGenerator = generateQuestions(questions, new User());
 
-new InputManager(function(text) {
+new InputManager(function(text = "") {
     if(Commands.isValidCommand(text)) {
       Commands.executeCommand(text);
       return;

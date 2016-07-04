@@ -2,20 +2,20 @@ const FileUtils = require('./FileUtils');
 
 const Commands = function() {};
 
-Commands.extractCommandAndOptionsFromText = function(text='') {
+Commands.extractCommandAndOptionsFromText = (text ='') => {
   let commandParts = text.split(" ");
   let [name, args] = commandParts;
 
   if(name.charAt(0) == "@") {
     return {
       name: name.slice(1),
-      args: args.splice(1)
+      args: args.slice(1)
     }
   }
   return null;
 };
 
-Commands.isValidCommand = function(text= '') {
+Commands.isValidCommand = (text ='') => {
   let command = Commands.extractCommandAndOptionsFromText(text);
   if(command) {
     return Commands.hasOwnProperty(command.name);
@@ -23,7 +23,7 @@ Commands.isValidCommand = function(text= '') {
   return false;
 };
 
-Commands.executeCommand = function(text='') {
+Commands.executeCommand = (text ='') => {
   let command;
   if(this.isValidCommand(text)) {
     command = Commands.extractCommandAndOptionsFromText(text);
@@ -32,10 +32,8 @@ Commands.executeCommand = function(text='') {
 };
 
 Commands.showUsers = function() {
-  FileUtils.getUsers(function (users) {
-    users.forEach(function(element){
-      console.log(users[i]);
-    });
+  FileUtils.getUsers((users) => {
+    users.forEach(user => console.log(user));
   });
 };
 

@@ -3,14 +3,12 @@ var generateQuestions = function (questions = [], user) {
 
   if (questions.length == 0) {
     return {
-      next: function () {
-        return null;
-      }
+      next: () => null
     }
   }
 
   return {
-    next: function (text = '') {
+    next: (text = '') => {
       let i;
       let answers = [];
       let foundAnswer;
@@ -25,9 +23,7 @@ var generateQuestions = function (questions = [], user) {
         user[property] = text;
         if (!goto) return user;
         else {
-          question = questions.find(function(q){
-            return q.id == goto;
-          });
+          question = questions.find(({id}) => id == goto);
           return question.text;
         }
       } else if (question.answers) {
@@ -38,9 +34,7 @@ var generateQuestions = function (questions = [], user) {
           }
         }
         if (!foundAnswer) {
-          answers = question.answers.map(function({text}){
-            return element.text;
-          });
+          answers = question.answers.map(({text}) => text);
           return answers;
         }
         else if (!foundAnswer.goto) return user;
