@@ -1,0 +1,10 @@
+npm install --global : Pour être utilisé en mode commande
+npm install --save : Sauvegarde peut partir en prod
+npm install --save-dev : sauvegarde version dev seulement
+
+Bower obselète face à NPM
+
+
+Function.prototype.bind passage du contexte(this) à une fonction -> permet de faire currying car retourne une nouvelle fonction
+
+WeakMap pour la gestion de listners ou des systèmes de Queue
