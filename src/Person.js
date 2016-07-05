@@ -1,12 +1,10 @@
+export class Person {
+  constructor(){
+    this.firstname = '';
+    this.lastname = '';
+  }
 
-let Person = function() {
-  this.firstname = '';
-  this.lastname = '';
-
-  this.getFullname = function() {
+  getFullname() {
     return `${this.firstname} ${this.lastname}`;
   }
-};
-
-if(typeof(module) != "undefined")
-  module.exports = Person;
+}

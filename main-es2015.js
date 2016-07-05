@@ -1,10 +1,10 @@
-const questions = require('./src/questions');
+import {questions} from './src/questions';
 
-const generateQuestions =  require('./src/questionsGenerator');
-const InputManager = require('./src/InputManager');
-const User = require('./src/User');
-const FileUtils = require('./src/FileUtils');
-const Commands = require('./src/Commands');
+import {generateQuestions} from './src/questionsGenerator';
+import {InputManager} from './src/InputManager';
+import {User} from './src/User';
+import {FileUtils} from './src/FileUtils';
+import {Commands} from './src/Commands';
 
 const questionsGenerator = generateQuestions(questions, new User());
 
@@ -18,15 +18,11 @@ new InputManager(function(text = "") {
 
   if(reply instanceof User) {
     console.log("saving your info");
-    FileUtils.saveUser(reply,
-             function(user) {
-               console.log(`Thank you ${user.getJobCard()}`);
-               process.exit(0);
-             },
-             function(err) {
-               console.log(err);
-               process.exit(0);
-             });
+    FileUtils.saveUser(reply).then(user =>{
+      console.log(`Thank you ${user.getJobCard()}`);
+    })
+    .catch(err=>console.log(err))
+    .then(data => process.exit(0));
   } else if(reply.constructor === Array) {
     let answers = reply.reduce(function(exValue, currentValue){
       return `${exValue}, ${currentValue}`;

@@ -1,41 +1,41 @@
-const FileUtils = require('./FileUtils');
+import FileUtils from './FileUtils';
 
-const Commands = function() {};
+export class Commands {
 
-Commands.extractCommandAndOptionsFromText = (text ='') => {
-  let commandParts = text.split(" ");
-  let [name, args] = commandParts;
+  constructor(){}
 
-  if(name.charAt(0) == "@") {
-    return {
-      name: name.slice(1),
-      args: args.slice(1)
+  extractCommandAndOptionsFromText(text ='') {
+    let commandParts = text.split(" ");
+    let [name, args] = commandParts;
+
+    if(name.charAt(0) == "@") {
+      return {
+        name: name.slice(1),
+        args: args.slice(1)
+      }
     }
-  }
-  return null;
-};
+    return null;
+  };
 
-Commands.isValidCommand = (text ='') => {
-  let command = Commands.extractCommandAndOptionsFromText(text);
-  if(command) {
-    return Commands.hasOwnProperty(command.name);
-  }
-  return false;
-};
+  isValidCommand(text =''){
+    let command = extractCommandAndOptionsFromText(text);
+    if(command) {
+      return hasOwnProperty(command.name);
+    }
+    return false;
+  };
 
-Commands.executeCommand = (text ='') => {
-  let command;
-  if(this.isValidCommand(text)) {
-    command = Commands.extractCommandAndOptionsFromText(text);
-    Commands[command.name].apply(null, command.args);
-  }
-};
+  executeCommand(text =''){
+    let command;
+    if(this.isValidCommand(text)) {
+      command = extractCommandAndOptionsFromText(text);
+      this[command.name].apply(null, command.args);
+    }
+  };
 
-Commands.showUsers = function() {
-  FileUtils.getUsers((users) => {
-    users.forEach(user => console.log(user));
-  });
-};
-
-if(typeof(module) != "undefined")
-  module.exports = Commands;
+  showUsers(){
+    FileUtils.getUsers().then((users) => {
+      users.forEach(user => console.log(user));
+    });
+  };
+}

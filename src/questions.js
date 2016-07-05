@@ -1,4 +1,4 @@
-const questions = [
+export const questions = [
   {
     id:1,
     text:"Hello, how are you?",
@@ -40,6 +40,3 @@ const questions = [
     answerMapTo:{property:"badgeNumber"}
   }
 ];
-
-if(typeof(module) != "undefined")
-  module.exports = questions;

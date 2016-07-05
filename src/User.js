@@ -1,20 +1,12 @@
-let Person;
-if(typeof(require) == "function")
-  Person = require('./Person');
+import {Person} from './Person';
+export class User extends Person {
+  constructor(){
+    super();
+    this.badgeNumber = '';
+    this.jobTitle = '';
+  }
 
-let User = function() {
-  Person.call(this);
-
-  this.badgeNumber = '';
-  this.jobTitle = '';
-
-  this.getJobCard = function() {
+  getJobCard() {
     return `${this.badgeNumber} : ${this.getFullname()}, ${this.jobTitle}`;
   }
 };
-
-User.prototype = Object.create(Person);
-User.constructor = User;
-
-if(typeof(module) != "undefined")
-  module.exports = User;

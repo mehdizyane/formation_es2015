@@ -1,4 +1,4 @@
-var generateQuestions = function (questions = [], user) {
+export var generateQuestions = function (questions = [], user) {
   var question;
 
   if (questions.length == 0) {
@@ -51,6 +51,3 @@ var generateQuestions = function (questions = [], user) {
     }
   };
 };
-
-if(typeof(module) != "undefined")
-  module.exports = generateQuestions;
