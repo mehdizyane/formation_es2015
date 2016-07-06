@@ -9,10 +9,10 @@ module.exports = {
     devtool: 'source-map',
     module:{
         loaders: [{
-            test: /\.js$$/,
+            test: /\.js$/,
             loader: 'babel-loader',
             query:{
-                plugins: ['transform-es2015-classes'],
+                plugins: ['babel-plugin-transform-es2015-modules-commonjs'],
                 presets: ['es2015'],
                 cacheDirectory:true
             }

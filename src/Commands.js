@@ -1,40 +1,39 @@
-import FileUtils from './FileUtils';
+import {getUsers} from './FileUtils';
 
 export class Commands {
 
   constructor(){}
 
-  extractCommandAndOptionsFromText(text ='') {
+  static extractCommandAndOptionsFromText(text ='') {
     let commandParts = text.split(" ");
-    let [name, args] = commandParts;
-
-    if(name.charAt(0) == "@") {
+    let [name,...args] = commandParts;
+    if(name.startsWith("@")) {
       return {
         name: name.slice(1),
-        args: args.slice(1)
+        args
       }
     }
     return null;
   };
 
-  isValidCommand(text =''){
-    let command = extractCommandAndOptionsFromText(text);
+  static isValidCommand(text =''){
+    let command = Commands.extractCommandAndOptionsFromText(text);
     if(command) {
-      return hasOwnProperty(command.name);
+      return Commands.hasOwnProperty(command.name);
     }
     return false;
   };
 
-  executeCommand(text =''){
+  static executeCommand(text =''){
     let command;
-    if(this.isValidCommand(text)) {
-      command = extractCommandAndOptionsFromText(text);
+    if(Commands.isValidCommand(text)) {
+      command = Commands.extractCommandAndOptionsFromText(text);
       this[command.name].apply(null, command.args);
     }
   };
 
-  showUsers(){
-    FileUtils.getUsers().then((users) => {
+  static showUsers(){
+    getUsers().then(users => {
       users.forEach(user => console.log(user));
     });
   };

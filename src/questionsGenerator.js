@@ -1,53 +1,27 @@
-export var generateQuestions = function (questions = [], user) {
-  var question;
-
-  if (questions.length == 0) {
-    return {
-      next: () => null
+export function *generateQuestions(questions = [], user) {
+  if (questions.length == 0) return;
+  let question = questions[0];
+  let answer = yield question.text;
+  while(true){
+    let i;
+    let answers = [];
+    let foundAnswer;
+    if (question.answerMapTo) {
+      let {property, goto} = question.answerMapTo;
+      user[property] = answer;
+      if (!goto) return user;
+      else {
+        question = questions.find(({id}) => id == goto);
+        answer = yield question.text;
+      }
+    } else if (question.answers) {
+      foundAnswer = question.answers.find(({text}) => text == answer);
+      if (!foundAnswer) yield question.answers.map(({text}) => text);
+      else if (!foundAnswer.goto) yield user;
+      else {
+        question = questions.find(({id}) => id == foundAnswer.goto);
+        answer = yield question.text;
+      }
     }
   }
-
-  return {
-    next: (text = '') => {
-      let i;
-      let answers = [];
-      let foundAnswer;
-
-      if(!question) {
-        question = questions[0];
-        return question.text;
-      }
-
-      if (question.answerMapTo) {
-        let {property, goto} = question.answerMapTo;
-        user[property] = text;
-        if (!goto) return user;
-        else {
-          question = questions.find(({id}) => id == goto);
-          return question.text;
-        }
-      } else if (question.answers) {
-        for(let answer of question.answers){
-          if (answer.text === text) {
-            foundAnswer = answer;
-            break;
-          }
-        }
-        if (!foundAnswer) {
-          answers = question.answers.map(({text}) => text);
-          return answers;
-        }
-        else if (!foundAnswer.goto) return user;
-        else {
-          for(let q of questions){
-            if (q.id == foundAnswer.goto) {
-              question = q;
-              break;
-            }
-          }
-          return question.text;
-        }
-      }
-    }
-  };
 };

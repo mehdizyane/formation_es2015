@@ -1,5 +1,5 @@
 export class InputManager{
-  InputManager(listener) {
+  constructor(listener) {
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
 
@@ -8,7 +8,7 @@ export class InputManager{
     });
   }
 
-  clearCRLF(line) {
+  static clearCRLF(line) {
     return line.replace(/[\n\r]/g, '');
   }
 }

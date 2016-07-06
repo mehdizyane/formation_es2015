@@ -1,4 +1,4 @@
-export const questions = [
+export var questions = [
   {
     id:1,
     text:"Hello, how are you?",
